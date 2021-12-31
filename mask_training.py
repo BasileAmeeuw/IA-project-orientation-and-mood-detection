@@ -1,3 +1,6 @@
+# USAGE
+# python train_mask_detector.py --dataset dataset
+
 # import the necessary packages
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.applications import MobileNetV2
@@ -18,7 +21,20 @@ from sklearn.metrics import classification_report
 from imutils import paths
 import matplotlib.pyplot as plt
 import numpy as np
+import argparse
 import os
+
+# construct the argument parser and parse the arguments
+ap = argparse.ArgumentParser()
+ap.add_argument("-d", "--dataset", type=str,
+	default="dataset",
+	help="path to input dataset")
+ap.add_argument("-p", "--plot", type=str, default="plot.png",
+	help="path to output loss/accuracy plot")
+ap.add_argument("-m", "--model", type=str,
+	default="models/mask_detector.model",
+	help="path to output face mask detector model")
+args = vars(ap.parse_args())
 
 # initialize the initial learning rate, number of epochs to train for,
 # and batch size
@@ -26,35 +42,38 @@ INIT_LR = 1e-4
 EPOCHS = 20
 BS = 32
 
-DIRECTORY = r"dataset_mask"
-CATEGORIES = ["with_mask", "without_mask"]
-
 # grab the list of images in our dataset directory, then initialize
 # the list of data (i.e., images) and class images
 print("[INFO] loading images...")
-
+imagePaths = list(paths.list_images(args["dataset"]))
 data = []
 labels = []
 
-for category in CATEGORIES:
-	path = os.path.join(DIRECTORY, category)
-	for img in os.listdir(path):
-		img_path = os.path.join(path, img)
-		image = load_img(img_path, target_size=(48, 48))
-		image = img_to_array(image)
-		image = preprocess_input(image)
+# loop over the image paths
+for imagePath in imagePaths:
+	# extract the class label from the filename
+	label = imagePath.split(os.path.sep)[-2]
 
-		data.append(image)
-		labels.append(category)
+	# load the input image (224x224) and preprocess it
+	image = load_img(imagePath, target_size=(224, 224))
+	image = img_to_array(image)
+	image = preprocess_input(image)
+
+	# update the data and labels lists, respectively
+	data.append(image)
+	labels.append(label)
+
+# convert the data and labels to NumPy arrays
+data = np.array(data, dtype="float32")
+labels = np.array(labels)
 
 # perform one-hot encoding on the labels
 lb = LabelBinarizer()
 labels = lb.fit_transform(labels)
 labels = to_categorical(labels)
 
-data = np.array(data, dtype="float32")
-labels = np.array(labels)
-
+# partition the data into training and testing splits using 75% of
+# the data for training and the remaining 25% for testing
 (trainX, testX, trainY, testY) = train_test_split(data, labels,
 	test_size=0.20, stratify=labels, random_state=42)
 
@@ -71,7 +90,7 @@ aug = ImageDataGenerator(
 # load the MobileNetV2 network, ensuring the head FC layer sets are
 # left off
 baseModel = MobileNetV2(weights="imagenet", include_top=False,
-	input_tensor=Input(shape=(48, 48, 1)))
+	input_tensor=Input(shape=(224, 224, 3)))
 
 # construct the head of the model that will be placed on top of the
 # the base model
@@ -120,7 +139,7 @@ print(classification_report(testY.argmax(axis=1), predIdxs,
 
 # serialize the model to disk
 print("[INFO] saving mask detector model...")
-model.save("models/mask_detector.model", save_format="h5")
+model.save(args["model"], save_format="h5")
 
 # plot the training loss and accuracy
 N = EPOCHS
@@ -134,4 +153,4 @@ plt.title("Training Loss and Accuracy")
 plt.xlabel("Epoch #")
 plt.ylabel("Loss/Accuracy")
 plt.legend(loc="lower left")
-plt.savefig("plot.png")
+plt.savefig(args["plot"])
