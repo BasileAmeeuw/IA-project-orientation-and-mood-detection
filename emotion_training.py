@@ -13,7 +13,7 @@ from tensorflow.keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
 from tensorflow.keras.utils import plot_model
 
 from livelossplot import PlotLossesKeras
-from livelossplot.keras import PlotLossesCallback
+
 import tensorflow as tf
 print("Tensorflow version:", tf.__version__)
 gpus = tf.config.experimental.list_physical_devices('GPU') 
@@ -86,10 +86,10 @@ epochs= 50
 steps_per_epoch=train_generator.n//train_generator.batch_size
 validation_steps=validation_generator.n//validation_generator.batch_size
 
-checkpoint = ModelCheckpoint("model_weigd.h5", monitor='val_accuracy',
+checkpoint = ModelCheckpoint("model_weights.h5", monitor='val_accuracy',
                             save_weights_only=True, mode='max', verbose=1)
 reduce_lr= ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=2, min_lr=0.00001, mode='auto')
-callbacks = [PlotLossesKeras(), checkpoint, reduce_lr]
+callbacks = [checkpoint, reduce_lr]
 history = model.fit(
     train_generator,
     steps_per_epoch=steps_per_epoch,
@@ -104,7 +104,7 @@ history = model.fit(
 #     json_file.write(model_json)
 
 model_json = model.to_json()
-with open("modsdl.json","w") as json_file:
+with open("model.json","w") as json_file:
     json_file.write(model_json)
 
     
