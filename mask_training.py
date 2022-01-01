@@ -27,7 +27,7 @@ import os
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-d", "--dataset", type=str,
-	default="dataset",
+	default="dataset_mask",
 	help="path to input dataset")
 ap.add_argument("-p", "--plot", type=str, default="plot.png",
 	help="path to output loss/accuracy plot")
