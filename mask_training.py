@@ -18,18 +18,22 @@ from tensorflow.keras.utils import to_categorical
 from sklearn.preprocessing import LabelBinarizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
+from keras.utils.vis_utils import plot_model
+
 from imutils import paths
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
 import os
 
+import tensorflow as tf
+
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-d", "--dataset", type=str,
 	default="dataset_mask",
 	help="path to input dataset")
-ap.add_argument("-p", "--plot", type=str, default="plot.png",
+ap.add_argument("-p", "--plot", type=str, default="image_saved/plot_mask.png",
 	help="path to output loss/accuracy plot")
 ap.add_argument("-m", "--model", type=str,
 	default="models/mask_detector.model",
@@ -154,3 +158,15 @@ plt.xlabel("Epoch #")
 plt.ylabel("Loss/Accuracy")
 plt.legend(loc="lower left")
 plt.savefig(args["plot"])
+tf.keras.utils.plot_model(
+    model,
+    to_file="image_saved/model_mask.png",
+    show_shapes=False,
+    show_dtype=False,
+    show_layer_names=True,
+    rankdir="TB",
+    expand_nested=False,
+    dpi=96,
+    layer_range=None,
+    show_layer_activations=False,
+)

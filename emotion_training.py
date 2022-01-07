@@ -10,7 +10,8 @@ from tensorflow.keras.layers import BatchNormalization, Activation, MaxPooling2D
 from tensorflow.keras.models import Model, Sequential
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
-from tensorflow.keras.utils import plot_model
+from keras.utils.vis_utils import plot_model
+
 
 from livelossplot import PlotLossesKeras
 
@@ -18,12 +19,14 @@ import tensorflow as tf
 import argparse
 import os
 
+
+
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-d", "--dataset", type=str,
 	default="dataset_emotion/",
 	help="path to input dataset")
-ap.add_argument("-p", "--plot", type=str, default="plot_emotion.png",
+ap.add_argument("-p", "--plot", type=str, default="image_saved/plot_emotion.png",
 	help="path to output loss/accuracy plot")
 ap.add_argument("-m", "--model", type=str,
 	default="models/model.json",
@@ -134,3 +137,15 @@ plt.xlabel("Epoch #")
 plt.ylabel("Loss/Accuracy")
 plt.legend(loc="lower left")
 plt.savefig(args["plot"])
+tf.keras.utils.plot_model(
+    model,
+    to_file="image_saved/model_emotion.png",
+    show_shapes=False,
+    show_dtype=False,
+    show_layer_names=True,
+    rankdir="TB",
+    expand_nested=False,
+    dpi=96,
+    layer_range=None,
+    show_layer_activations=False,
+)

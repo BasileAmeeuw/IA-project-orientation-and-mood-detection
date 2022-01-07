@@ -129,7 +129,7 @@ def pro(img,mask,draw_rect1=True,draw_rect2=True,draw_lines=True,draw_mask=True)
 ##### PARTIE EMOTION Recognition
 
 #photo
-mask=cv2.imread("testHAPPY.jpg")
+mask=cv2.imread("imageSmiley/neutral.jpg")
 
 # the video
 cap = cv2.VideoCapture(0)
