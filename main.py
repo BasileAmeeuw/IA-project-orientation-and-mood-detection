@@ -65,15 +65,9 @@ def pro(img,mask,draw_rect1=True,draw_rect2=True,draw_lines=True,draw_mask=True)
 	for face in faces:
 		i=int((i+1)/480)
 		x1 = face.left()
-
 		y1 =face.top()
-
 		x2= face.right()
-
-
 		y2= face.bottom()
-
-
 		landmarks = predector(colImg,face)
 
 		size = copy.shape
@@ -358,6 +352,7 @@ while(True):
 				# ordering, resize it to 224x224, and preprocess it
 				face = frame[startY:endY, startX:endX]
 				locsForOr=(startXOr,startYOr,endXOr,endYOr)
+				# print(startY,endY,startX,endX)
 				# cv2.imshow("yes",cv2.resize(face,(700,700)))
 				# cv2.imshow("ydses",cv2.resize(faceForOr,(700,700)))
 				if face.any():
@@ -389,6 +384,7 @@ while(True):
 						cv2.putText(frame, "pas d'orientation mais " + predicted_emotion + " devine", (startX, startY - 10),
 							cv2.FONT_HERSHEY_SIMPLEX, 0.45, (255, 0, 0), 2)
 						cv2.rectangle(frame, (startX, startY), (endX, endY), (255, 0, 0), 2)
+
 
 		resized_img = cv2.resize(copy, (user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)))
 		if args.image is not None:
