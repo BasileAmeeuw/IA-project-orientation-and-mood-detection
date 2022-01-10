@@ -146,7 +146,7 @@ while(True):
     ret, frame = cap.read()
 
     if ret == True:
-        res=pro(frame,mask,draw_rect1=False,draw_rect2=False,draw_lines=False,draw_mask=True)
+        res=pro(frame,mask,draw_rect1=True,draw_rect2=True,draw_lines=True,draw_mask=False)
         cv2.imshow('head',res)
         # Write the frame into the file 'output.avi'
         out.write(res)

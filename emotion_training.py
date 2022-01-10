@@ -39,8 +39,9 @@ tf.config.experimental.set_memory_growth(gpus[0], True)
 datasetPath=args["dataset"]
 for expression in os.listdir(datasetPath+"train/"):
     print(str(len(os.listdir(datasetPath+"train/"+expression))) + " "+expression + " images")
-img_size = 224
-batch_size = 32
+
+img_size = 48
+batch_size = 64
 datagen_train = ImageDataGenerator(horizontal_flip=True)
 train_generator=datagen_train.flow_from_directory(datasetPath+"train/",
                                                  target_size=(img_size, img_size),
@@ -100,11 +101,11 @@ opt=Adam(lr=0.0005)
 model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
 model.summary()
 
-epochs= 50
+epochs= 100
 steps_per_epoch=train_generator.n//train_generator.batch_size
 validation_steps=validation_generator.n//validation_generator.batch_size
 
-checkpoint = ModelCheckpoint("model_weights.h5", monitor='val_accuracy',
+checkpoint = ModelCheckpoint("models/model_weights.h5", monitor='val_accuracy',
                             save_weights_only=True, mode='max', verbose=1)
 reduce_lr= ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=2, min_lr=0.00001, mode='auto')
 callbacks = [checkpoint, reduce_lr]
