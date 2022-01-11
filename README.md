@@ -19,7 +19,7 @@ Dans un premier temps il vous faudra installer Python et les librairies suivante
 * streamlit==0.79.0
 Ces différents prérequis se trouvent dans le fichier [requirements.txt](https://github.com/BasileAmeeuw/IA-project-orientation-and-mood-detection/blob/main/requirements.txt)
 
-Ensuite il vous faudra également installer dlib qui est une librairie C++ mais utilisable en Python, pour l'installer suivez les instructions détaillées dans le README suivant: [EADME Dlib](https://github.com/BasileAmeeuw/IA-project-orientation-and-mood-detection/blob/main/dlib-19.9/README.md)
+Ensuite il vous faudra également installer dlib qui est une librairie C++ mais utilisable en Python, pour l'installer suivez les instructions détaillées dans le README suivant: [README Dlib](https://github.com/BasileAmeeuw/IA-project-orientation-and-mood-detection/blob/main/dlib-19.9/README.md)
 
 ## Exécution pour l'exécution
 
@@ -61,9 +61,9 @@ python emotion_training.py
  
  ## Contributeurs
  
- Leprêtre Romain
+ [Leprêtre Romain](https://github.com/rlepretre)
  
- Ameeuw Basile
+ [Ameeuw Basile](https://github.com/BasileAmeeuw)
  
  ## Licence 
  
