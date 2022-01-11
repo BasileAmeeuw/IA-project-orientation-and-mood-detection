@@ -1,10 +1,10 @@
 # IA Project orientation and mood detection
 
-# Introduction 
+## Introduction 
 
 L’objectif  de  ce  projet  est  d’implémenter  une  application  de  reconnaissance  faciale  capable  de distinguer l’émotion et l’orientation du visage, mais également de détecter un visage masqué ou non. Ce projet étant une  ́evaluation, certaines contraintes étaient imposés. 
 
-# Prérequis
+## Prérequis
 
 Dans un premier temps il vous faudra installer Python et les librairies suivantes:
 * tensorflow>=2.5.0
@@ -21,9 +21,9 @@ Ces différents prérequis se trouvent dans le fichier [requirements.txt](https:
 
 Ensuite il vous faudra également installer dlib qui est une librairie C++ mais utilisable en Python, pour l'installer suivez les instructions détaillées dans le README suivant: [EADME Dlib](https://github.com/BasileAmeeuw/IA-project-orientation-and-mood-detection/blob/main/dlib-19.9/README.md)
 
-# Exécution pour l'exécution
+## Exécution pour l'exécution
 
-### Avec modèle déja entrainé
+#### Avec modèle déja entrainé
 
 Si vous utilisez les modèles pré-entrainés: il vous suffit d'exécuter la commande suivante
 ```
@@ -40,7 +40,7 @@ Et si vous souhaiter utiliser une image exécutez ceci:
 python main.py --image PATH_OF_IMAGE
 ```
 
-### Avec entrainement
+#### Avec entrainement
 
 Si vous voulez entrainer les modèles vous même, vous devrez dans un premier temps entrainer le modèle pour le mask et ensuite celui pour les émotions. Dans un premier temps exécutez:
 ```
@@ -55,15 +55,15 @@ python emotion_training.py
  
  Après les entrainements retourner à l'étape "avec modèle déja entrainé" et suivez les instructions.
  
- # Conclusion
+ ## Conclusion
  
  Le projet est suffisant selon nous mais exige encore beaucoup de révision et de versioning pour arriver à une application fiable et viable.
  
- # Contributeurs
+ ## Contributeurs
  
  Leprêtre Romain
  Ameeuw Basile
  
- # Licence 
+ ## Licence 
  
  MIT License
