@@ -62,6 +62,7 @@ python emotion_training.py
  ## Contributeurs
  
  Leprêtre Romain
+ 
  Ameeuw Basile
  
  ## Licence 
